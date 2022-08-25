@@ -1,0 +1,19 @@
+.studentAttendance {
+  margin-top: 40px;
+}
+.studentAttendance table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.studentAttendance thead tr {
+  background-color: #f3f3f3;
+  color: #707478;
+  text-align: left;
+  font-weight: bold;
+}
+.studentAttendance th,
+.studentAttendance td {
+  border: 1px solid #000;
+  padding: 4px 8px;
+  font-weight: lighter;
+}
