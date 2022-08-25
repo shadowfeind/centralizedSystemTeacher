@@ -240,12 +240,14 @@ const Resources = () => {
         setSubject(
           allInitialData.searchFilterModel.ddlSubjectForTeacher[0]?.Key
         );
-        dispatch(
-          getAllOtherOptionsForResourcesSelectAction(
-            allInitialData.modelDb.IDHREmployee,
-            allInitialData.searchFilterModel.ddlSubjectForTeacher[0]?.Key
-          )
-        );
+        if (allInitialData.searchFilterModel.ddlSubjectForTeacher?.length > 0) {
+          dispatch(
+            getAllOtherOptionsForResourcesSelectAction(
+              allInitialData.modelDb.IDHREmployee,
+              allInitialData.searchFilterModel.ddlSubjectForTeacher[0]?.Key
+            )
+          );
+        }
       }
     }
   }, [allInitialData, dispatch]);
