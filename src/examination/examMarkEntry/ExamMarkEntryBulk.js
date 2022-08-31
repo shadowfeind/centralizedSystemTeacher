@@ -119,7 +119,9 @@ const ExamMarkEntryBulk = ({ bulkData, statusData }) => {
                     <TextField
                       id={`theory_${subject.IDHREmployee}`}
                       defaultValue={subject.ObtainedMark}
-                      onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
+                      onKeyDown={(e) =>
+                        symbolsArr.includes(e.key) && e.preventDefault()
+                      }
                       type="number"
                       label="Obtained Mark"
                       variant="outlined"
@@ -131,7 +133,9 @@ const ExamMarkEntryBulk = ({ bulkData, statusData }) => {
                     <TextField
                       id={`practical_${subject.IDHREmployee}`}
                       defaultValue={subject.ObtainedMarkPractical}
-                      onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
+                      onKeyDown={(e) =>
+                        symbolsArr.includes(e.key) && e.preventDefault()
+                      }
                       type="number"
                       label="Obtained Practical Mark"
                       variant="outlined"
@@ -143,7 +147,9 @@ const ExamMarkEntryBulk = ({ bulkData, statusData }) => {
                     <TextField
                       id={`preterm_${subject.IDHREmployee}`}
                       defaultValue={subject.ObtainedMarkPreTerm}
-                      onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
+                      onKeyDown={(e) =>
+                        symbolsArr.includes(e.key) && e.preventDefault()
+                      }
                       type="number"
                       label="Obtained PreTerm Mark"
                       variant="outlined"

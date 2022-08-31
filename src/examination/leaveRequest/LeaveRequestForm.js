@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import {
   postLeaveRequestAction,
   putLeaveRequestAction,
 } from "./LeaveRequestActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDLeaveRequest: 0,
@@ -106,111 +107,108 @@ const LeaveRequestForm = ({
   const gender = [{ Key: "", Value: "" }];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <SelectControl
-            name="ReceiverID"
-            label="Reciever Name"
-            value={values.ReceiverID}
-            onChange={handleInputChange}
-            options={
-              leaveRequestEdit
-                ? leaveRequestEdit.ddlTeacher
-                : leaveRequestCreate
-                ? leaveRequestCreate.ddlTeacher
-                : gender
-            }
-            errors={errors.ReceiverID}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputControl
-            name="LeaveDecription"
-            label="Leave Decription*"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            multiline
-            rows={4}
-            value={values.LeaveDecription}
-            onChange={handleInputChange}
-            errors={errors.LeaveDecription}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <DatePickerControl
-            name="FromDate"
-            label="FromDate*"
-            value={values.FromDate}
-            onChange={handleInputChange}
-            errors={errors.FromDate}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="ReceiverID"
+                label="Reciever Name"
+                value={values.ReceiverID}
+                onChange={handleInputChange}
+                options={
+                  leaveRequestEdit
+                    ? leaveRequestEdit.ddlTeacher
+                    : leaveRequestCreate
+                    ? leaveRequestCreate.ddlTeacher
+                    : gender
+                }
+                errors={errors.ReceiverID}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputControl
+                name="LeaveDecription"
+                label="Leave Decription*"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                multiline
+                rows={4}
+                value={values.LeaveDecription}
+                onChange={handleInputChange}
+                errors={errors.LeaveDecription}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerControl
+                name="FromDate"
+                label="FromDate*"
+                value={values.FromDate}
+                onChange={handleInputChange}
+                errors={errors.FromDate}
+              />
 
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            options={
-              leaveRequestEdit
-                ? leaveRequestEdit.ddlIsActive
-                : leaveRequestCreate
-                ? leaveRequestCreate.ddlIsActive
-                : gender
-            }
-          />
-          <InputControl
-            name="ImageUploaded"
-            // label="Select Profile Photo"
-            // value={values.ClassLocation}
-            onChange={(e) => handleImage(e)}
-            type="file"
-            // errors={errors.ClassLocation}
-          />
-          <img
-            src={
-              imgSrc
-                ? imgSrc
-                : leaveRequestEdit && `${API_URL}${leaveRequestEdit.FullPath}`
-            }
-            height={200}
-            width={200}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <DatePickerControl
-            name="ToDate"
-            label="ToDate*"
-            value={values.ToDate}
-            onChange={handleInputChange}
-            errors={errors.ToDate}
-          />
-          <InputControl
-            disabled
-            name="Status"
-            label="Status"
-            value={values.Status}
-            onChange={null}
-            options={
-              leaveRequestEdit
-                ? leaveRequestEdit.ddlStatus
-                : leaveRequestCreate
-                ? leaveRequestCreate.ddlStatus
-                : gender
-            }
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={
+                  leaveRequestEdit
+                    ? leaveRequestEdit.ddlIsActive
+                    : leaveRequestCreate
+                    ? leaveRequestCreate.ddlIsActive
+                    : gender
+                }
+              />
+              <InputControl
+                name="ImageUploaded"
+                // label="Select Profile Photo"
+                // value={values.ClassLocation}
+                onChange={(e) => handleImage(e)}
+                type="file"
+                // errors={errors.ClassLocation}
+              />
+              <img
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : leaveRequestEdit &&
+                      `${API_URL}${leaveRequestEdit.FullPath}`
+                }
+                height={200}
+                width={200}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <DatePickerControl
+                name="ToDate"
+                label="ToDate*"
+                value={values.ToDate}
+                onChange={handleInputChange}
+                errors={errors.ToDate}
+              />
+              <InputControl
+                disabled
+                name="Status"
+                label="Status"
+                value={values.Status}
+                onChange={null}
+                options={
+                  leaveRequestEdit
+                    ? leaveRequestEdit.ddlStatus
+                    : leaveRequestCreate
+                    ? leaveRequestCreate.ddlStatus
+                    : gender
+                }
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -224,12 +222,13 @@ const LeaveRequestForm = ({
           color="primary"
           type="submit"
           disabled={active}
+          onClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

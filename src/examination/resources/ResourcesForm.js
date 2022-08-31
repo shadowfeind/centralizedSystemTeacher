@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import CheckBoxControl from "../../components/controls/CheckBoxControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import { postResourceAction } from "./ResourcesActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   Id: 0,
@@ -72,51 +73,47 @@ const ResourcesForm = ({ setOpenPopup, searchFilterModel, dbModel }) => {
     }
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="CourseName"
-            label="Resource Name"
-            value={values.CourseName}
-            onChange={handleInputChange}
-            errors={errors.CourseName}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="CourseName"
+                label="Resource Name"
+                value={values.CourseName}
+                onChange={handleInputChange}
+                errors={errors.CourseName}
+              />
 
-          <InputControl
-            name="ImageUploaded"
-            onChange={(e) => handleImage(e)}
-            type="file"
-            errors={errors.image}
-          />
+              <InputControl
+                name="ImageUploaded"
+                onChange={(e) => handleImage(e)}
+                type="file"
+                errors={errors.image}
+              />
 
-          <img src={imgSrc} height={200} width={200} />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="CourseDescription"
-            label="Resource Description"
-            value={values.CourseDescription}
-            onChange={handleInputChange}
-            errors={errors.CourseDescription}
-          />
-          <CheckBoxControl
-            label="isActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            name="isActive"
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <img src={imgSrc} height={200} width={200} />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="CourseDescription"
+                label="Resource Description"
+                value={values.CourseDescription}
+                onChange={handleInputChange}
+                errors={errors.CourseDescription}
+              />
+              <CheckBoxControl
+                label="isActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                name="isActive"
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -130,12 +127,13 @@ const ResourcesForm = ({ setOpenPopup, searchFilterModel, dbModel }) => {
           color="primary"
           type="submit"
           disabled={active}
+          onClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 
