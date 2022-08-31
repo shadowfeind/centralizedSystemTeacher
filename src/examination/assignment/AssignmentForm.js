@@ -9,6 +9,7 @@ import {
   Checkbox,
   Button,
   Grid,
+  DialogContent,
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -19,6 +20,7 @@ import { useForm, Form } from "../../customHooks/useForm";
 import DatePickerControl from "../../components/controls/DatePickerControl";
 import { postTeacherAssignmentAction } from "./AssignmentActions";
 import { API_URL } from "../../constants";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDAssignment: 0,
@@ -180,153 +182,150 @@ const AssignmentForm = ({ students, formDatas, setOpenPopup }) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Roll No. </StyledTableCell>
-              <StyledTableCell>Student Name</StyledTableCell>
-              <StyledTableCell>Mobile No.</StyledTableCell>
-              <StyledTableCell>Email ID.</StyledTableCell>
-              <StyledTableCell style={{ textAlign: "right" }}>
-                <label>All</label>
-                <Checkbox
-                  checked={checked}
-                  color="primary"
-                  onChange={(e) => handleAllChecked(e.target.checked)}
-                />
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {lstStudents &&
-              lstStudents
-                ?.sort((a, b) => a.RollNo - b.RollNo)
-                ?.map((s) => (
-                  <StyledTableRow key={s.IDHREmployee}>
-                    <StyledTableCell component="th" scope="row">
-                      {s.RollNo}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.FullName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.MobileNumber}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.EmailID}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      component="th"
-                      scope="row"
-                      style={{ textAlign: "right" }}
-                    >
-                      <Checkbox
-                        checked={
-                          selectedStudents.filter(
-                            (x) => x.IDHREmployee === s.IDHREmployee
-                          ).length > 0
-                            ? true
-                            : false
-                        }
-                        color="primary"
-                        onChange={(e) => handleChecked(e.target.checked, s)}
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div style={{ height: "30px" }}></div>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={6}>
-            <InputControl
-              name="AssignmentName"
-              label="Assignment Name"
-              value={values.AssignmentName}
-              onChange={handleInputChange}
-              errors={errors.AssignmentName}
-            />
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Roll No. </StyledTableCell>
+                <StyledTableCell>Student Name</StyledTableCell>
+                <StyledTableCell>Mobile No.</StyledTableCell>
+                <StyledTableCell>Email ID.</StyledTableCell>
+                <StyledTableCell style={{ textAlign: "right" }}>
+                  <label>All</label>
+                  <Checkbox
+                    checked={checked}
+                    color="primary"
+                    onChange={(e) => handleAllChecked(e.target.checked)}
+                  />
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {lstStudents &&
+                lstStudents
+                  ?.sort((a, b) => a.RollNo - b.RollNo)
+                  ?.map((s) => (
+                    <StyledTableRow key={s.IDHREmployee}>
+                      <StyledTableCell component="th" scope="row">
+                        {s.RollNo}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.FullName}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.MobileNumber}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.EmailID}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        component="th"
+                        scope="row"
+                        style={{ textAlign: "right" }}
+                      >
+                        <Checkbox
+                          checked={
+                            selectedStudents.filter(
+                              (x) => x.IDHREmployee === s.IDHREmployee
+                            ).length > 0
+                              ? true
+                              : false
+                          }
+                          color="primary"
+                          onChange={(e) => handleChecked(e.target.checked, s)}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div style={{ height: "30px" }}></div>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="AssignmentName"
+                label="Assignment Name"
+                value={values.AssignmentName}
+                onChange={handleInputChange}
+                errors={errors.AssignmentName}
+              />
 
-            <DatePickerControl
-              name="AssignmentDate"
-              label="FromDate"
-              value={values.AssignmentDate}
-              onChange={handleInputChange}
-              errors={errors.AssignmentDate}
-            />
-            <InputControl
-              name="ImageUploaded"
-              // value={values.ClassLocation}
-              onChange={(e) => handleImage(e)}
-              type="file"
-            />
-            <img
-              src={
-                imgSrc ? imgSrc : formDatas && `${API_URL}${formDatas.FullPath}`
-              }
-              height={200}
-              width={200}
-            />
+              <DatePickerControl
+                name="AssignmentDate"
+                label="FromDate"
+                value={values.AssignmentDate}
+                onChange={handleInputChange}
+                errors={errors.AssignmentDate}
+              />
+              <InputControl
+                name="ImageUploaded"
+                // value={values.ClassLocation}
+                onChange={(e) => handleImage(e)}
+                type="file"
+              />
+              <img
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : formDatas && `${API_URL}${formDatas.FullPath}`
+                }
+                height={200}
+                width={200}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="TotalMark"
+                label="Full Marks*"
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                type="number"
+                value={values.TotalMark}
+                onChange={handleInputChange}
+                errors={errors.TotalMark}
+              />
+              <DatePickerControl
+                name="DueDate"
+                label="DueDate*"
+                value={values.DueDate}
+                onChange={handleInputChange}
+                errors={errors.DueDate}
+              />
+              <InputControl
+                name="AssignmentSummary"
+                label="Assignment Summary"
+                value={values.AssignmentSummary}
+                onChange={handleInputChange}
+                errors={errors.AssignmentSummary}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <InputControl
-              name="TotalMark"
-              label="Full Marks*"
-              onKeyDown={(e) =>
-                symbolsArrPhone.includes(e.key) && e.preventDefault()
-              }
-              type="number"
-              value={values.TotalMark}
-              onChange={handleInputChange}
-              errors={errors.TotalMark}
-            />
-            <DatePickerControl
-              name="DueDate"
-              label="DueDate*"
-              value={values.DueDate}
-              onChange={handleInputChange}
-              errors={errors.DueDate}
-            />
-            <InputControl
-              name="AssignmentSummary"
-              label="Assignment Summary"
-              value={values.AssignmentSummary}
-              onChange={handleInputChange}
-              errors={errors.AssignmentSummary}
-            />
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          onClick={handleSubmit}
+          style={{ margin: "10px 0 0 10px" }}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };
